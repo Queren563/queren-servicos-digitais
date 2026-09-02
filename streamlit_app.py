@@ -313,17 +313,15 @@ for i, (icone, titulo, descricao) in enumerate(cards):
 
         st.markdown(
             f"""
-<div class="card">
-    <div style="font-size:34px">
-        {icone}
-    </div>
-
-    <h3>{titulo}</h3>
-
-    <p>{descricao}</p>
-</div>
-""",
-            unsafe_allow_html=True
+            <div class="card">
+            <div style="font-size:34px">
+            {icone}
+            </div>
+            <h3>{titulo}</h3>
+            <p>{descricao}</p>
+            </div>
+            """,
+                 unsafe_allow_html=True
         )
 
 

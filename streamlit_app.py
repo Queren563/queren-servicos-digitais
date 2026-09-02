@@ -1,10 +1,5 @@
 import streamlit as st
 import requests
-from datetime import datetime
-
-# =========================================================
-# CONFIGURAÇÃO
-# =========================================================
 
 st.set_page_config(
     page_title="Queren Serviços Digitais",
@@ -13,9 +8,9 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# =========================================================
-# CONTATOS
-# =========================================================
+# =========================
+# CONFIGURAÇÕES
+# =========================
 
 WHATSAPP = "SEU_WHATSAPP"
 EMAIL = "SEU_EMAIL"
@@ -30,88 +25,73 @@ SERVICOS = [
     "📁 Organização de arquivos/documentos"
 ]
 
-# =========================================================
-# VISUAL DO SITE
-# =========================================================
+# =========================
+# ESTILO
+# =========================
 
 st.markdown("""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 .stApp {
-    background: #f7f8f8;
+    background: #080b0a;
+    color: #ffffff;
 }
 
 .block-container {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-    max-width: 1200px;
+    max-width: 1180px;
+    padding-top: 35px;
+    padding-bottom: 50px;
 }
 
-h1, h2, h3 {
-    color: #101414;
+/* TÍTULOS */
+
+h1, h2, h3, p, label {
+    color: #ffffff !important;
 }
+
+/* HERO */
 
 .hero {
-    background: linear-gradient(135deg, #101414 0%, #17201e 100%);
-    border-radius: 28px;
-    padding: 55px 45px;
-    margin-bottom: 35px;
-    color: white;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.10);
-}
-
-.hero h1 {
-    color: white;
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-
-.hero p {
-    color: #d8dfdc;
-    font-size: 18px;
-    line-height: 1.7;
-    max-width: 700px;
+    background: linear-gradient(135deg, #111614, #18211e);
+    border: 1px solid #26342f;
+    border-radius: 30px;
+    padding: 60px 45px;
+    margin-bottom: 45px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.35);
 }
 
 .badge {
     display: inline-block;
-    background: #d9f99d;
-    color: #18220f;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-weight: 700;
+    background: #c8f36a;
+    color: #101510 !important;
+    padding: 8px 16px;
+    border-radius: 30px;
     font-size: 13px;
+    font-weight: bold;
     margin-bottom: 18px;
 }
 
-.card {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    min-height: 170px;
-    border: 1px solid #e8ecea;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
+.hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0;
 }
 
-.card h3 {
-    margin-top: 10px;
-    font-size: 20px;
+.hero p {
+    color: #cbd4d0 !important;
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 720px;
 }
 
-.card p {
-    color: #626b68;
-    line-height: 1.6;
-}
+/* SEÇÕES */
 
 .section-title {
+    color: #ffffff !important;
     font-size: 32px;
     font-weight: 800;
     margin-top: 45px;
@@ -119,36 +99,103 @@ h1, h2, h3 {
 }
 
 .section-subtitle {
-    color: #66706d;
+    color: #aab5b0 !important;
     margin-bottom: 25px;
 }
 
-.form-box {
-    background: white;
-    border-radius: 25px;
-    padding: 30px;
-    border: 1px solid #e7ebe9;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+/* CARDS */
+
+.card {
+    background: #111614;
+    border: 1px solid #26342f;
+    border-radius: 22px;
+    padding: 25px;
+    min-height: 190px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.20);
 }
 
+.card h3 {
+    color: #ffffff !important;
+    font-size: 20px;
+}
+
+.card p {
+    color: #aab5b0 !important;
+    line-height: 1.6;
+}
+
+/* FORMULÁRIO */
+
+.form-box {
+    background: #111614;
+    border: 1px solid #26342f;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* CAMPOS */
+
+.stTextInput input,
+.stTextArea textarea,
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #1a211e !important;
+    color: #ffffff !important;
+    border: 1px solid #34443e !important;
+    border-radius: 12px !important;
+}
+
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder {
+    color: #8d9994 !important;
+}
+
+/* SELECT */
+
+div[data-baseweb="select"] span {
+    color: #ffffff !important;
+}
+
+/* BOTÃO */
+
+.stButton > button {
+    background: #c8f36a !important;
+    color: #101510 !important;
+    border: none !important;
+    border-radius: 13px !important;
+    font-weight: 800 !important;
+    min-height: 50px;
+}
+
+.stButton > button:hover {
+    background: #d8ff82 !important;
+    color: #101510 !important;
+}
+
+/* PAGAMENTO */
+
 .payment-box {
-    background: #eef7e5;
-    border: 1px solid #d9e9c7;
-    border-radius: 22px;
+    background: #172016;
+    border: 1px solid #3d5131;
+    border-radius: 23px;
     padding: 28px;
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .payment-box h3 {
-    color: #26351e;
+    color: #c8f36a !important;
 }
 
 .payment-box p {
-    color: #52604b;
+    color: #c4cec8 !important;
 }
 
+/* CONTATO */
+
 .contact-box {
-    background: #101414;
+    background: linear-gradient(135deg, #111614, #18211e);
+    border: 1px solid #26342f;
     color: white;
     padding: 35px;
     border-radius: 25px;
@@ -156,33 +203,53 @@ h1, h2, h3 {
 }
 
 .contact-box h2 {
-    color: white;
+    color: #ffffff !important;
 }
 
 .contact-box p {
-    color: #d7ddda;
+    color: #b8c2bd !important;
 }
 
-.stButton > button {
+/* INFO */
+
+div[data-testid="stAlert"] {
     border-radius: 12px;
-    font-weight: 700;
-    border: none;
-    min-height: 45px;
 }
+
+/* RODAPÉ */
 
 .footer {
     text-align: center;
-    color: #7a8380;
-    padding: 35px 0 10px;
+    color: #69746f !important;
+    padding: 40px 0 10px;
     font-size: 14px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .hero {
+        padding: 40px 25px;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    .section-title {
+        font-size: 27px;
+    }
+
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# =========================================================
-# TOPO
-# =========================================================
+
+# =========================
+# HERO
+# =========================
 
 st.markdown("""
 <div class="hero">
@@ -199,9 +266,10 @@ para pessoas, estudantes e pequenos negócios.
 </div>
 """, unsafe_allow_html=True)
 
-# =========================================================
+
+# =========================
 # SERVIÇOS
-# =========================================================
+# =========================
 
 st.markdown(
     '<div class="section-title">Meus serviços</div>',
@@ -210,7 +278,7 @@ st.markdown(
 
 st.markdown(
     '<div class="section-subtitle">'
-    'Escolha o serviço que você precisa e solicite um orçamento.'
+    'Serviços digitais feitos de forma personalizada e profissional.'
     '</div>',
     unsafe_allow_html=True
 )
@@ -218,36 +286,23 @@ st.markdown(
 col1, col2, col3 = st.columns(3)
 
 cards = [
-    (
-        "🎬",
-        "Edição de vídeos",
-        "Edição de vídeos para redes sociais, trabalhos e conteúdos digitais."
-    ),
-    (
-        "📊",
-        "Excel",
-        "Organização de planilhas, tabelas, cálculos e apresentação de dados."
-    ),
-    (
-        "📝",
-        "Digitação e formatação",
-        "Digitação, organização e formatação de documentos."
-    ),
-    (
-        "📄",
-        "Currículos",
-        "Criação e organização de currículos com visual profissional."
-    ),
-    (
-        "📊",
-        "PowerPoint",
-        "Criação e organização de apresentações claras e profissionais."
-    ),
-    (
-        "📁",
-        "Organização de arquivos",
-        "Organização e padronização de arquivos e documentos digitais."
-    )
+    ("🎬", "Edição de vídeos",
+     "Edição de vídeos para redes sociais, trabalhos e conteúdos digitais."),
+
+    ("📊", "Excel",
+     "Organização de planilhas, tabelas, cálculos e apresentação de dados."),
+
+    ("📝", "Digitação e formatação",
+     "Digitação, organização e formatação de documentos."),
+
+    ("📄", "Currículos",
+     "Criação e organização de currículos com visual profissional."),
+
+    ("📊", "PowerPoint",
+     "Criação e organização de apresentações claras e profissionais."),
+
+    ("📁", "Organização de arquivos",
+     "Organização e padronização de arquivos e documentos digitais.")
 ]
 
 for i, (icone, titulo, descricao) in enumerate(cards):
@@ -255,20 +310,28 @@ for i, (icone, titulo, descricao) in enumerate(cards):
     coluna = [col1, col2, col3][i % 3]
 
     with coluna:
+
         st.markdown(
             f"""
             <div class="card">
-                <div style="font-size:32px">{icone}</div>
+
+                <div style="font-size:34px">
+                    {icone}
+                </div>
+
                 <h3>{titulo}</h3>
+
                 <p>{descricao}</p>
+
             </div>
             """,
             unsafe_allow_html=True
         )
 
-# =========================================================
+
+# =========================
 # SOBRE
-# =========================================================
+# =========================
 
 st.markdown(
     '<div class="section-title">Sobre o serviço</div>',
@@ -282,7 +345,7 @@ st.markdown("""
 
 <p>
 Cada solicitação é analisada individualmente para entender
-o que você precisa e apresentar uma proposta adequada.
+exatamente o que você precisa.
 </p>
 
 <p>
@@ -293,9 +356,10 @@ um visual profissional.
 </div>
 """, unsafe_allow_html=True)
 
-# =========================================================
-# FORMULÁRIO
-# =========================================================
+
+# =========================
+# ORÇAMENTO
+# =========================
 
 st.markdown(
     '<div class="section-title">Solicite um orçamento</div>',
@@ -304,18 +368,27 @@ st.markdown(
 
 st.markdown(
     '<div class="section-subtitle">'
-    'Preencha os dados abaixo para enviar sua solicitação.'
+    'Preencha os dados abaixo e envie sua solicitação.'
     '</div>',
     unsafe_allow_html=True
 )
 
 st.markdown('<div class="form-box">', unsafe_allow_html=True)
 
-nome = st.text_input("Seu nome *")
+nome = st.text_input(
+    "Seu nome *",
+    placeholder="Digite seu nome"
+)
 
-whatsapp = st.text_input("WhatsApp *")
+whatsapp = st.text_input(
+    "WhatsApp *",
+    placeholder="Digite seu WhatsApp"
+)
 
-email = st.text_input("E-mail")
+email = st.text_input(
+    "E-mail",
+    placeholder="Digite seu e-mail"
+)
 
 servico = st.selectbox(
     "Qual serviço você precisa? *",
@@ -324,7 +397,8 @@ servico = st.selectbox(
 
 descricao = st.text_area(
     "Explique o que você precisa *",
-    height=150
+    placeholder="Conte um pouco sobre o seu projeto...",
+    height=160
 )
 
 prazo = st.text_input(
@@ -348,9 +422,10 @@ enviar = st.button(
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# =========================================================
-# FUNÇÃO DO BANCO DE DADOS
-# =========================================================
+
+# =========================
+# BANCO DE DADOS
+# =========================
 
 def salvar_pedido(dados):
 
@@ -375,17 +450,15 @@ def salvar_pedido(dados):
             timeout=20
         )
 
-        if resposta.status_code in [200, 201, 204]:
-            return True
-
-        return False
+        return resposta.status_code in [200, 201, 204]
 
     except Exception:
         return False
 
-# =========================================================
-# ENVIO DO PEDIDO
-# =========================================================
+
+# =========================
+# ENVIO
+# =========================
 
 if enviar:
 
@@ -405,8 +478,7 @@ if enviar:
             "descricao": descricao,
             "prazo": prazo,
             "forma_pagamento": pagamento,
-            "status": "Novo",
-            "criado_em": datetime.now().isoformat()
+            "status": "Novo"
         }
 
         sucesso = salvar_pedido(pedido)
@@ -415,19 +487,20 @@ if enviar:
 
             st.success(
                 "✅ Solicitação enviada com sucesso! "
-                "Entrarei em contato para conversar sobre o orçamento."
+                "Entraremos em contato para conversar sobre o orçamento."
             )
 
         else:
 
             st.error(
                 "⚠️ Não foi possível enviar a solicitação. "
-                "Verifique a conexão com o banco de dados."
+                "Verifique a configuração do banco de dados."
             )
 
-# =========================================================
+
+# =========================
 # PAGAMENTO
-# =========================================================
+# =========================
 
 st.markdown("""
 <div class="payment-box">
@@ -450,9 +523,10 @@ Também é possível combinar outras formas de pagamento.
 </div>
 """, unsafe_allow_html=True)
 
-# =========================================================
+
+# =========================
 # CONTATO
-# =========================================================
+# =========================
 
 st.markdown("""
 <div class="contact-box">
@@ -478,9 +552,10 @@ with col2:
 with col3:
     st.info("📸 Instagram\n\n" + INSTAGRAM)
 
-# =========================================================
+
+# =========================
 # RODAPÉ
-# =========================================================
+# =========================
 
 st.markdown("""
 <div class="footer">

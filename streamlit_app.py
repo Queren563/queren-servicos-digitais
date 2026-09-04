@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import urllib.parse
 
 st.set_page_config(
     page_title="Queren Serviços Digitais",
@@ -11,7 +12,9 @@ st.set_page_config(
 # CONTATOS
 # =========================
 
-WHATSAPP = "Seu WhatsApp"
+WHATSAPP = "(28) 99922-1199"
+WHATSAPP_NUMERO = "5527999221199"
+
 EMAIL = "seuemail@email.com"
 INSTAGRAM = "@seuinstagram"
 
@@ -108,12 +111,8 @@ st.write(
 )
 
 st.write(
-    "O objetivo é entregar arquivos organizados, claros e com um visual profissional."
-)
-
-st.write(
-    "Os valores apresentados são preços iniciais e podem variar de acordo com "
-    "a quantidade e a complexidade do serviço."
+    "Os valores apresentados são preços iniciais e podem variar "
+    "de acordo com a quantidade e a complexidade do serviço."
 )
 
 st.divider()
@@ -134,8 +133,8 @@ nome = st.text_input(
     placeholder="Digite seu nome"
 )
 
-whatsapp = st.text_input(
-    "WhatsApp *",
+whatsapp_cliente = st.text_input(
+    "Seu WhatsApp *",
     placeholder="Digite seu WhatsApp"
 )
 
@@ -175,7 +174,7 @@ enviar = st.button(
 
 
 # =========================
-# BANCO DE DADOS
+# FUNÇÃO DO SUPABASE
 # =========================
 
 def salvar_pedido(pedido):
@@ -183,7 +182,6 @@ def salvar_pedido(pedido):
     try:
 
         supabase_url = st.secrets["SUPABASE_URL"]
-
         supabase_key = st.secrets["SUPABASE_ANON_KEY"]
 
         url = (
@@ -221,7 +219,7 @@ if enviar:
     if nome.strip() == "":
         st.error("⚠️ Digite seu nome.")
 
-    elif whatsapp.strip() == "":
+    elif whatsapp_cliente.strip() == "":
         st.error("⚠️ Digite seu WhatsApp.")
 
     elif descricao.strip() == "":
@@ -230,21 +228,13 @@ if enviar:
     else:
 
         pedido = {
-
             "nome": nome,
-
-            "whatsapp": whatsapp,
-
+            "whatsapp": whatsapp_cliente,
             "email": email,
-
             "servico": servico,
-
             "descricao": descricao,
-
             "prazo": prazo,
-
             "forma_pagamento": pagamento,
-
             "status": "Novo"
         }
 
@@ -252,19 +242,53 @@ if enviar:
 
         if sucesso:
 
+            # Mensagem que será aberta no WhatsApp
+            mensagem = f"""Olá! Recebi uma nova solicitação de orçamento pelo site.
+
+👤 Nome: {nome}
+📱 WhatsApp: {whatsapp_cliente}
+📧 E-mail: {email}
+
+🛠️ Serviço:
+{servico}
+
+📝 Descrição:
+{descricao}
+
+📅 Prazo desejado:
+{prazo if prazo else "Não informado"}
+
+💳 Forma de pagamento:
+{pagamento}
+
+Gostaria de confirmar o orçamento."""
+
+            mensagem_codificada = urllib.parse.quote(mensagem)
+
+            link_whatsapp = (
+                f"https://wa.me/{WHATSAPP_NUMERO}"
+                f"?text={mensagem_codificada}"
+            )
+
             st.success(
                 "✅ Solicitação enviada com sucesso!"
             )
 
             st.write(
-                "Entraremos em contato para conversar sobre o orçamento."
+                "Agora você pode abrir o WhatsApp para continuar "
+                "a conversa sobre o orçamento."
+            )
+
+            st.link_button(
+                "💬 Continuar pelo WhatsApp",
+                link_whatsapp
             )
 
         else:
 
             st.error(
                 "⚠️ Não foi possível enviar a solicitação. "
-                "A configuração do banco de dados ainda precisa ser concluída."
+                "Verifique a configuração do banco de dados."
             )
 
 
@@ -311,23 +335,15 @@ st.write(
 col1, col2, col3 = st.columns(3)
 
 with col1:
-
     st.write("📱 WhatsApp")
-
     st.write(WHATSAPP)
 
-
 with col2:
-
     st.write("📧 E-mail")
-
     st.write(EMAIL)
 
-
 with col3:
-
     st.write("📸 Instagram")
-
     st.write(INSTAGRAM)
 
 
